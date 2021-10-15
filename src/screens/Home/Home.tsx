@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import Animated, {
-  Easing,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
   interpolate,
   Extrapolate,
 } from "react-native-reanimated";

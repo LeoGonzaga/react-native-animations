@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import colors from "../../constants/colors";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  interpolate,
+  Extrapolate,
+} from "react-native-reanimated";
 
+import colors from "../../constants/colors";
 import Delivery from "../../../assets/delivery.png";
 import Clock from "../../../assets/clock.png";
 import Pin from "../../../assets/location.png";
 import InfoOrder from "../../components/InfoOrder";
 
-export const OrderModal = ({ onClose }: any) => {
+type Props = {
+  onClose: () => void;
+};
+
+export const OrderModal = ({ onClose }: Props) => {
+  const scaleVal = useSharedValue(0);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: withSpring(scaleVal.value) }],
+    };
+  });
+
+  useEffect(() => {
+    scaleVal.value = withSpring(1);
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container,animatedStyles]}>
       <View style={styles.row}>
         <Image source={Delivery} style={styles.icon} />
         <View>
@@ -34,7 +57,7 @@ export const OrderModal = ({ onClose }: any) => {
           <Text style={styles.textButton}>Back to order</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -64,7 +87,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    marginTop:20
+    marginTop: 20,
   },
   title: {
     fontSize: 22,
@@ -88,9 +111,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  icon:{
+  icon: {
     width: 120,
-    height: 120
+    height: 120,
   },
- 
 });
