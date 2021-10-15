@@ -4,8 +4,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  interpolate,
-  Extrapolate,
 } from "react-native-reanimated";
 
 import colors from "../../constants/colors";
@@ -32,7 +30,7 @@ export const OrderModal = ({ onClose }: Props) => {
   }, []);
 
   return (
-    <Animated.View style={[styles.container,animatedStyles]}>
+    <Animated.View style={[styles.container, animatedStyles]}>
       <View style={styles.row}>
         <Image source={Delivery} style={styles.icon} />
         <View>

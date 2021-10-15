@@ -1,24 +1,48 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import colors from '../../constants/colors';
+import React, { useEffect } from "react";
+import { StyleSheet, Text } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  interpolate,
+} from "react-native-reanimated";
+
+import colors from "../../constants/colors";
 
 export const Title = () => {
+  const sharedVal = useSharedValue(-100);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: sharedVal.value }],
+      opacity: interpolate(
+        sharedVal.value,
+        [-100, 0],
+        [0, 1],
+      ),
+    };
+  });
+
+  useEffect(() => {
+    sharedVal.value = withSpring(0);
+  }, []);
+
   return (
-    <View style={styles.row}>
+    <Animated.View style={[styles.row, animatedStyles]}>
       <Text style={styles.title}>Pizza Margerita</Text>
       <Text style={styles.price}>$18.95</Text>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.text,
     paddingRight: 19,
   },
@@ -28,4 +52,3 @@ const styles = StyleSheet.create({
     color: colors.details,
   },
 });
-

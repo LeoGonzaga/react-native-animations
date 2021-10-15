@@ -35,7 +35,12 @@ export const Home = () => {
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{ rotateZ: withSpring(`${sharedVal.value}deg`) }],
-      opacity: interpolate(sharedVal.value, [100, 0], [0, 1], Extrapolate.CLAMP),
+      opacity: interpolate(
+        sharedVal.value,
+        [100, 0],
+        [0, 1],
+        Extrapolate.CLAMP
+      ),
     };
   });
 
